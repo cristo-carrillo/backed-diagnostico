@@ -1,0 +1,4 @@
+paquetes
+venv
+__pycache__
+*.csv
