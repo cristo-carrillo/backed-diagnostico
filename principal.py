@@ -1,14 +1,10 @@
 from flask import Flask, request
-from main import diagnosticate
-
+from routes.diagnosis_routes import diagnosis
 
 app = Flask(__name__)
 
-@app.route("/diagnostico", methods=['GET', 'POST'])
-def diagnostico():
-    sintomas_paciente = request.get_json()
-    print(sintomas_paciente)
-    return diagnosticate(sintomas_paciente)
+app.register_blueprint(diagnosis)
+
 
 if __name__=="__main__":
     app.run(debug=True)
