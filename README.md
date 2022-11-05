@@ -15,5 +15,5 @@ Se crea una api para diagnosticar la probabilidad que tiene una persona en padec
 ### pip install python-dotenv
 
 # Autores
-*[Cristo_Jesús_Carrillo_Sánchez]
-*[Yurgen_Prado_Lopez]
+[Cristo_Jesús_Carrillo_Sánchez]
+[Yurgen_Prado_Lopez]
