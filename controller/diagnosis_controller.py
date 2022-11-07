@@ -1,6 +1,6 @@
 
-from model.diagnosis_model import insert
+from model.diagnosis_model import insert_sintomas
 
 def insert_diagnosis(sintomas):
     print('insert')
-    insert(sintomas.copy())
+    insert_sintomas(sintomas.copy())

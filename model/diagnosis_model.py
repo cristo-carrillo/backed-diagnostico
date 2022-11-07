@@ -1,6 +1,6 @@
 from conexion import gha, close_sesion
 
-def insert(sintomas):
+def insert_sintomas(sintomas):
     try:
         collect = gha.diagnosis
         collect.insert_one(sintomas)
