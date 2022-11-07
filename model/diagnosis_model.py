@@ -5,5 +5,7 @@ def insert(sintomas):
         collect = gha.diagnosis
         collect.insert_one(sintomas)
         close_sesion()
-    except Exception:
+        print("registro agregado")
+    except Exception as e:
+        print(f"error {e}")
         pass
