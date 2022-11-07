@@ -7,9 +7,9 @@ diagnosis = Blueprint('diagnosis', __name__)
 @diagnosis.route("/diagnostico", methods=['GET', 'POST'])
 def diagnostico():
     sintomas_paciente = request.get_json()
-    print(sintomas_paciente)
+    print(f"1: {sintomas_paciente}")
     insert_diagnosis(sintomas_paciente)
-    print(sintomas_paciente)
+    print(f"2: {sintomas_paciente}")
     return diagnosticate(sintomas_paciente)
 
 @diagnosis.route('/')
