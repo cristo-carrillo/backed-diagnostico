@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from algoritmo_diagnostico import diagnosticate
 from controller.diagnosis_controller import insert_diagnosis
 
@@ -12,3 +12,6 @@ def diagnostico():
     print(sintomas_paciente)
     return diagnosticate(sintomas_paciente)
 
+@diagnosis.route('/')
+def index():
+    return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
