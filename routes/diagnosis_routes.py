@@ -14,7 +14,7 @@ def diagnostico():
 
 
 def header_req():
-    print(request.headers['Host'])
+    print(request.remote_addr)
 
 @diagnosis.route('/')
 def index():
