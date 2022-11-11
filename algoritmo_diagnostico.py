@@ -93,6 +93,14 @@ def data_prueba():
 
 # sintomas_paciente = data_prueba()
 def diagnosticate(sintomas_paciente):
-    prediccion = knn.predict_proba(pd.DataFrame(sintomas_paciente))
-    
-    return {"response":f"Usted tiene un {validar_datos(round(prediccion[0][1]*100,2))}% de probabilidad de padecer diabetes"}
+    try:
+        prediccion = knn.predict_proba(pd.DataFrame(sintomas_paciente))
+        return {
+            "probability":validar_datos(round(prediccion[0][1]*100,2)),
+            "status":200
+            }
+    except Exception:
+        return {
+            "probability":-1,
+            "status":500
+        }
