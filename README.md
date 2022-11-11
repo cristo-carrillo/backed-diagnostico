@@ -13,7 +13,10 @@ Se crea una api para diagnosticar la probabilidad que tiene una persona en padec
 ### pip install -U scikit-learn
 ### pip install Flask-PyMongo
 ### pip install python-dotenv
+### pip install gunicorn flask
+### pip install -U flask-cors
 
 # Autores
 [Cristo_Jesús_Carrillo_Sánchez]
 [Yurgen_Prado_Lopez]
+[Carlos_Samuel_Lobo_Silva]
