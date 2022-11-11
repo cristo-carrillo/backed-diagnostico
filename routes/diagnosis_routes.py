@@ -10,7 +10,7 @@ def diagnostico():
     insert_diagnosis(sintomas_paciente)
     print(f"2: {sintomas_paciente}")
     header_req()
-    return diagnosticate(sintomas_paciente)
+    return jsonify(diagnosticate(sintomas_paciente))
 
 
 def header_req():
