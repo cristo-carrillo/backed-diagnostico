@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from algoritmo_diagnostico import diagnosticate
-from controller.diagnosis_controller import insert_diagnosis
+from controller.diagnosis_controller import insert_diagnosis, adapt_sintomas
 
 diagnosis = Blueprint('diagnosis', __name__)
 
@@ -10,7 +10,8 @@ def diagnostico():
     insert_diagnosis(sintomas_paciente)
     print(f"2: {sintomas_paciente}")
     header_req()
-    return jsonify(diagnosticate(sintomas_paciente))
+    sintomas_copia = adapt_sintomas(sintomas_paciente)
+    return jsonify(diagnosticate(sintomas_copia))
 
 
 def header_req():
