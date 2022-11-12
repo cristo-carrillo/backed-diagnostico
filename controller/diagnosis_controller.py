@@ -1,9 +1,16 @@
+from datetime import datetime
+from model.diagnosis_model import Diagnosi
 
-from model.diagnosis_model import insert_sintomas
 
-def insert_diagnosis(sintomas):
-    insert_sintomas(sintomas.copy())
+def insert_diagnosis(sintomas_paciente, result_diagnosis):
+    diagnosis_mo = Diagnosi(sintomas_paciente['email'], datetime.now(),
+                            sintomas_paciente['factores'], result_diagnosis['probability'])
+    diagnosis_mo.insert_sintomas()
 
+
+def query_sintomas(email):
+    historial_diag = Diagnosi()
+    # Diagnosi().query_sintomas(email)
 
 def adapt_sintomas(sintomas):
     return {
