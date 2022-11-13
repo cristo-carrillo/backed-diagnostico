@@ -1,9 +1,6 @@
 from conexion import bd_conexion
-
-
+from datetime import datetime
 class Diagnosi:
-    def __init__(self):
-        print('hola')
     
     def __init__(self,email, fecha_diagnostico, factores, prob_diagnostico):
         self.email = email
@@ -14,13 +11,62 @@ class Diagnosi:
     def insert_sintomas(self):
         try:
             collect = bd_conexion.diagnosis
-            collect.insert_one({"email": self.email, "fecha_diagnostico": self.fecha_diagnostico,
-                                "prob_diagnostico": self.prob_diagnostico, "factores": self.factores})
+            collect.insert_one({
+                "email": self.email, 
+                "fecha_diagnostico": self.fecha_diagnostico,
+                "prob_diagnostico": self.prob_diagnostico, 
+                "factores": self.factores
+                })
             print("diagnostocp agregado")
         except Exception as e:
             print(f"error {e}")
     
-    def query_sintomas(self, email):
-        busqueda = bd_conexion.diagnosis.find({'email':email})
-        for i in busqueda:
-            print(i)
+    @classmethod
+    def query_diagnosis(self, email=None, fecha = None):
+        try:
+            if fecha is None and email is None:
+                return None
+            filtro_fecha ={"$gt" : datetime.fromisoformat(fecha)}
+            busqueda = bd_conexion.diagnosis.find({
+                'email':email,
+                "fecha_diagnostico":filtro_fecha
+                },
+                {
+                'factores':0,
+                'email':0
+                })
+            historial_diag = []
+            
+            for i in busqueda:
+                print(type(i['_id']))
+                i['_id'] = str(i['_id'])
+                i['fecha_diagnostico'] = i['fecha_diagnostico'].strftime("%Y-%m-%d")
+                historial_diag.append(i)
+            busqueda.close()
+            return historial_diag
+        
+        except Exception as e:
+            print(e)
+            return None
+        
+    @classmethod
+    def query_sintomas(self, id):
+        try:
+            if id is None:
+                return None
+            busqueda = bd_conexion.diagnosis.find({
+                '_id':id
+                },
+                {
+                'factores':1,
+                '_id':0
+                })
+            historial_sint = []
+            for i in busqueda:
+                historial_sint.append(i)
+            
+            busqueda.close()
+            return historial_sint
+        except Exception as e:
+            print(e)
+            return None
