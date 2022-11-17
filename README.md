@@ -7,14 +7,8 @@ Se crea una api para diagnosticar la probabilidad que tiene una persona en padec
 
 *[Crear_un_venv] py -m venv venv
 *[instalar_las_sisguientes_librerias]
-### py -m pip install Flask
-### py -m pip install seaborn
-### py -m pip install scipy
-### pip install -U scikit-learn
-### pip install Flask-PyMongo
-### pip install python-dotenv
-### pip install gunicorn flask
-### pip install -U flask-cors
+### pip install -r requirements.txt
+*[en_requirements_estan_todas_las_librerias_necesarias_con_las_versiones_especificas🦾]
 
 # Autores
 [Cristo_Jesús_Carrillo_Sánchez]
