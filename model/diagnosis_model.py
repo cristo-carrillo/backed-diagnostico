@@ -38,7 +38,6 @@ class Diagnosi:
             historial_diag = []
             
             for i in busqueda:
-                print(type(i['_id']))
                 i['_id'] = str(i['_id'])
                 i['fecha_diagnostico'] = i['fecha_diagnostico'].strftime("%Y-%m-%d")
                 historial_diag.append(i)
