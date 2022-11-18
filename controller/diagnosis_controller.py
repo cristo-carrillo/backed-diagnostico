@@ -2,6 +2,8 @@ from model.diagnosis_model import Diagnosi
 from bson.objectid import ObjectId
 from utils.dates import calculate_today
 
+
+print(calculate_today())
 def insert_diagnosis(sintomas_paciente, result_diagnosis):
     if result_diagnosis['probability'] != -1:
         diagnosis_mo = Diagnosi(sintomas_paciente['email'], calculate_today(),
