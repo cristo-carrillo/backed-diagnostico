@@ -3,9 +3,10 @@ from bson.objectid import ObjectId
 from utils.dates import calculate_today
 
 def insert_diagnosis(sintomas_paciente, result_diagnosis):
-    diagnosis_mo = Diagnosi(sintomas_paciente['email'], calculate_today(),
-                            sintomas_paciente['factores'], result_diagnosis['probability'])
-    diagnosis_mo.insert_sintomas()
+    if result_diagnosis['probability'] != -1:
+        diagnosis_mo = Diagnosi(sintomas_paciente['email'], calculate_today(),
+                                sintomas_paciente['factores'], result_diagnosis['probability'])
+        diagnosis_mo.insert_sintomas()
 
 
 def query_diagnosis(email=None,fecha=None):
