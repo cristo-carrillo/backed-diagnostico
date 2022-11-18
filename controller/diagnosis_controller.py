@@ -1,9 +1,9 @@
-from datetime import datetime
 from model.diagnosis_model import Diagnosi
 from bson.objectid import ObjectId
+from utils.dates import calculate_today
 
 def insert_diagnosis(sintomas_paciente, result_diagnosis):
-    diagnosis_mo = Diagnosi(sintomas_paciente['email'], datetime.now(),
+    diagnosis_mo = Diagnosi(sintomas_paciente['email'], calculate_today(),
                             sintomas_paciente['factores'], result_diagnosis['probability'])
     diagnosis_mo.insert_sintomas()
 
