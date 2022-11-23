@@ -34,5 +34,28 @@ class Kin:
                 "name_second": self.name_second,
                 "parentesco": self.parentesco
                 }])
+    
+    @classmethod
+    def search_familiar_mod(self,email):
+        try:
+            if email is None:
+                return None
+            busqueda = conexion_mongo.bd_conexion[0].kin.find({
+                'user_main':email,
+                },
+                {
+                'user_second':1,
+                'name_second':1,
+                '_id':0
+                })
+            cant_kin = []
+            
+            for i in busqueda:
+                cant_kin.append(i)
+            busqueda.close()
+            return cant_kin
         
+        except Exception as e:
+            print(e)
+            return None
     

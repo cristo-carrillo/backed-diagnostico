@@ -24,3 +24,18 @@ def determinate_kin(dict_kin):
             'user_second':dict_kin['user_main'],
             'name_second':dict_kin['name_main'],
             'parentesco':kin_fam[dict_kin['parentesco']]}
+    
+
+def search_familiar_con(email):
+    cant_kin = Kin.search_familiar_mod(email)
+    if cant_kin is None:
+        return []
+    if len(cant_kin) == 0:
+        return []
+    calculate_original(cant_kin)
+    return cant_kin
+
+def calculate_original(cant_kin):
+    cant = set(i['user_second'] for i in cant_kin)
+    
+    print(cant)
