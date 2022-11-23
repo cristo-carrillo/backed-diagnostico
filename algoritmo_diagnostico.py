@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-import seaborn as sns
 from sklearn.neighbors import KNeighborsClassifier
 
 data_diabetes = pd.read_csv('DATOS_TABULADOS.csv', delimiter=",")

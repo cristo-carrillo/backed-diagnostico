@@ -9,7 +9,8 @@ kin = Blueprint('kin', __name__)
 def add_parentesco():
     data_parentesco = request.get_json()
     print(data_parentesco)
-    insert_kin_family(data_parentesco)
+    if insert_kin_family(data_parentesco) == 0:
+        return jsonify({"msg":"el familiar ya estaba asociado"})
     return send_email(data_parentesco['user_second'])
 
 @kin.route('/search_familiar/<email>')

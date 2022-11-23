@@ -1,10 +1,15 @@
 from model.kin_model import Kin
 
+
 def insert_kin_family(dict_kin):
     kin_one = format_kin(dict_kin)
+    parent = kin_one.family_exist()
+    if len(parent)>0:
+        return 0
     dict_kin_two = determinate_kin(dict_kin)
     kin_two = format_kin(dict_kin_two)
     kin_two.insert_kin_many(kin_one)
+    return 1
 
 def format_kin(dict_kin):
     
@@ -32,10 +37,11 @@ def search_familiar_con(email):
         return []
     if len(cant_kin) == 0:
         return []
-    calculate_original(cant_kin)
-    return cant_kin
+    
+    return calculate_original(cant_kin)
 
 def calculate_original(cant_kin):
-    cant = set(i['user_second'] for i in cant_kin)
-    
-    print(cant)
+    relacion_nombre = {}
+    for i in cant_kin:
+        relacion_nombre[i['user_second']] = [i['name_second'],i['parentesco']]
+    return Kin.query_as_diagnosis(relacion_nombre)
