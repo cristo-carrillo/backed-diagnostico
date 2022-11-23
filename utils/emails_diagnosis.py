@@ -1,31 +1,36 @@
 import os
-from email.message import EmailMessage
-import ssl
-import smtplib
-from dotenv import load_dotenv
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from utils.sesion_email import session_activa
 
-load_dotenv()
 def send_email(email_receptor):
-    contexto =  ssl.create_default_context()
-    
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context = contexto) as smtp:
-        print(os.getenv('EMAIL'))
-        smtp.login(os.getenv('EMAIL'), os.getenv('PASSWORD_EMAIL'))
-        smtp.sendmail(os.getenv('EMAIL'), email_receptor, body_email(email_receptor))
+    try:
+        session_activa.session_email.sendmail(os.getenv('EMAIL'), email_receptor, body_email(email_receptor))
+        return "🦾"
+    except Exception as e:
+        return e
 
 def body_email(email_receptor):
+    
     asunto = 'conoce la probabilidad de padecer diabetes'
     body = """
-    Ingresa al siguiente enlace y conoce la probabilidad que tienes
-    de padecer diabetes
-    https://diagnosis-diabetes.netlify.app/
+    <div class="banner" >
+        <div class="contenido" >
+            <img src="https://i.postimg.cc/jqNPhtvf/celeste.png" type="image/png">
+            <h1>Diagnosticate</h1>
+            <p>"Conocer la diabetes es el primer paso hacia la prevención, el diagnóstico y el tratamiento"</p>
+            <div>
+                <p> https://diagnosis-diabetes.netlify.app/inicio</p>
+            </div>
+        </div>
+    </div>
     """
-    em = EmailMessage()
-    em['From'] = os.getenv('EMAIL')
-    em['To'] = email_receptor
-    em['Subject'] = asunto
-    em.set_content(body)
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = "Link"
+    msg['From'] = os.getenv('EMAIL')
+    msg['To'] = email_receptor
+    part2 = MIMEText(body, 'html')
+    msg.attach(part2)
     
-    return em.as_string()
-
-send_email("cjcarrillos@ufpso.edu.co")
+    
+    return msg.as_string()

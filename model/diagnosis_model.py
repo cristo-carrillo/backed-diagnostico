@@ -1,4 +1,4 @@
-from conexion import bd_conexion
+from conexion import conexion_mongo
 from datetime import datetime
 class Diagnosi:
     
@@ -10,7 +10,7 @@ class Diagnosi:
     
     def insert_sintomas(self):
         try:
-            collect = bd_conexion.diagnosis
+            collect = conexion_mongo.bd_conexion[0].diagnosis
             collect.insert_one({
                 "email": self.email, 
                 "fecha_diagnostico": self.fecha_diagnostico,
@@ -27,7 +27,7 @@ class Diagnosi:
             if fecha is None and email is None:
                 return None
             filtro_fecha ={"$gt" : datetime.fromisoformat(fecha)}
-            busqueda = bd_conexion.diagnosis.find({
+            busqueda = conexion_mongo.bd_conexion[0].diagnosis.find({
                 'email':email,
                 "fecha_diagnostico":filtro_fecha
                 },
@@ -53,7 +53,7 @@ class Diagnosi:
         try:
             if id is None:
                 return None
-            busqueda = bd_conexion.diagnosis.find({
+            busqueda = conexion_mongo.bd_conexion[0].diagnosis.find({
                 '_id':id
                 },
                 {
