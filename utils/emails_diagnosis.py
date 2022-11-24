@@ -8,7 +8,7 @@ def send_email(email_receptor, mail_emisor):
         session_activa.session_email.sendmail(os.getenv('EMAIL'), email_receptor, body_email(email_receptor,mail_emisor))
         return {"msg":"El familiar se ha registrado con éxito"}
     except Exception as e:
-        return {"msg":"Ups algo salio mal"}
+        return {"msg":f"Ups algo salio mal {e}"}
 
 def body_email(email_receptor, mail_emisor):
     
