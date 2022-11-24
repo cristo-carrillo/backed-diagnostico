@@ -8,6 +8,8 @@ kin = Blueprint('kin', __name__)
 @kin.route('/add_parentesco',methods=['POST'])
 def add_parentesco():
     data_parentesco = request.get_json()
+    if data_parentesco['user_second'] == data_parentesco['user_main']:
+        return jsonify({"msg":"No puedes agregarte como familiar", "exists":True})
     print(data_parentesco)
     return jsonify(insert_kin_family(data_parentesco))
 
