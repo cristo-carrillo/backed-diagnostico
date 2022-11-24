@@ -126,3 +126,19 @@ class Kin:
         except Exception as e:
             print(e)
             return 0
+        
+    @classmethod
+    def consult_kin(self, email):
+        busqueda = conexion_mongo.bd_conexion[0].kin.find({
+                'user_main': email,
+            },
+                {
+                'name_second': 1,
+                'parentesco': 1,
+                '_id': 0
+            })
+        cant_kin = []
+        for i in busqueda:
+            cant_kin.append(i)
+        busqueda.close()
+        return cant_kin

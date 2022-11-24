@@ -1,14 +1,19 @@
 import os
+import ssl
+import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from utils.sesion_email import session_activa
 
 def send_email(email_receptor, mail_emisor):
     try:
-        session_activa.session_email.sendmail(os.getenv('EMAIL'), email_receptor, body_email(email_receptor,mail_emisor))
-        return {"msg":"El familiar se ha registrado con éxito"}
+        contexto =  ssl.create_default_context()
+        session_email = smtplib.SMTP_SSL('smtp.gmail.com', 465, context = contexto)
+        session_email.login(os.getenv('EMAIL'), os.getenv('PASSWORD_EMAIL'))
+        print(session_email.sendmail(os.getenv('EMAIL'), email_receptor, body_email(email_receptor,mail_emisor)))
+        session_email.quit()
+        return {"cod":"00"}
     except Exception as e:
-        return {"msg":f"Ups algo salio mal {e}"}
+        return {"cod":f"500 {e}"}
 
 def body_email(email_receptor, mail_emisor):
     

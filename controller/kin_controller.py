@@ -1,15 +1,18 @@
 from model.kin_model import Kin
-
+from utils.emails_diagnosis import send_email
 
 def insert_kin_family(dict_kin):
     kin_one = format_kin(dict_kin)
     parent = kin_one.family_exist()
     if len(parent)>0:
-        return 0
-    dict_kin_two = determinate_kin(dict_kin)
-    kin_two = format_kin(dict_kin_two)
-    kin_two.insert_kin_many(kin_one)
-    return 1
+        return {"msg":"El familiar ya estaba asociado"}
+    msg = send_email(dict_kin['user_second'], dict_kin['name_main'])
+    if msg['code'] == '00':
+        dict_kin_two = determinate_kin(dict_kin)
+        kin_two = format_kin(dict_kin_two)
+        kin_two.insert_kin_many(kin_one)
+        return {'msg':'Familiar agregado correctamente'}
+    return {'msg':'Ups algo salio mal'}
 
 def format_kin(dict_kin):
     
@@ -62,3 +65,7 @@ def calculate_family(query_family):
 
 def delete_family_con(user_main,user_second):
     return Kin.delete_family_mod(user_main,user_second)
+
+def consult_kin_con(self, email):
+    data = Kin.consult_kin(email)
+    
