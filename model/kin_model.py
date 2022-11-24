@@ -82,7 +82,7 @@ class Kin:
                 ).sort('fecha_diagnostico',pymongo.DESCENDING).limit(1)
                 data_bus = [i for i in busqueda if len(i)>0]
                 if len(data_bus) > 0:
-                    data_bus[0]['name_second'] = name[0]
+                    data_bus[0]['family_name'] = name[0]
                     data_bus[0]['parentesco'] = name[1]
                     data_bus[0]['fecha_diagnostico'] = data_bus[0]['fecha_diagnostico'].strftime("%Y-%m-%d")
                     family.append(data_bus[0])
@@ -91,3 +91,38 @@ class Kin:
         except Exception as e:
             print(e)
             return None
+    
+    @classmethod
+    def search_family_status(self, email):
+        try:
+            family = []
+            for i,name in email.items():
+                busqueda = conexion_mongo.bd_conexion[0].diagnosis.find({
+                    'email': i},
+                    {'email': 1,
+                    '_id': 0}
+                ).sort('fecha_diagnostico',pymongo.DESCENDING).limit(1)
+                data_bus = [j for j in busqueda if len(j)>0]
+                if len(data_bus) > 0:
+                    data_bus[0]['family_name'] = name[0]
+                    data_bus[0]['parentesco'] = name[1]
+                    data_bus[0]['status'] = True
+                    family.append(data_bus[0])
+                else:
+                    family.append({'email':i,'family_name':name[0],'parentesco':name[1],'status':False})
+                busqueda.close()
+            return family
+        except Exception as e:
+            print(e)
+            return None
+    @classmethod
+    def delete_family_mod(self,user_main,user_second):
+        try:
+            deletecount = conexion_mongo.bd_conexion[0].kin.delete_many({
+            '$or':[{
+                '$and':[{'user_main':user_main},{'user_second':user_second}]},
+                {'$and':[{'user_main':user_second},{'user_second':user_main}]}]})
+            return deletecount.deleted_count
+        except Exception as e:
+            print(e)
+            return 0

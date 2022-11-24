@@ -45,3 +45,20 @@ def calculate_original(cant_kin):
     for i in cant_kin:
         relacion_nombre[i['user_second']] = [i['name_second'],i['parentesco']]
     return Kin.query_as_diagnosis(relacion_nombre)
+
+def search_family_sta(email):
+    query_family = Kin.search_familiar_mod(email)
+    if query_family is None:
+        return []
+    if len(query_family) == 0:
+        return []
+    return calculate_family(query_family)
+
+def calculate_family(query_family):
+    relacion_nombre = {}
+    for i in query_family:
+        relacion_nombre[i['user_second']] = [i['name_second'],i['parentesco']]
+    return Kin.search_family_status(relacion_nombre)
+
+def delete_family_con(user_main,user_second):
+    return Kin.delete_family_mod(user_main,user_second)

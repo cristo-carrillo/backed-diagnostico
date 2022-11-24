@@ -3,21 +3,22 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from utils.sesion_email import session_activa
 
-def send_email(email_receptor):
+def send_email(email_receptor, mail_emisor):
     try:
-        session_activa.session_email.sendmail(os.getenv('EMAIL'), email_receptor, body_email(email_receptor))
-        return {"msg":"el familiar se ha registardo con éxito"}
+        session_activa.session_email.sendmail(os.getenv('EMAIL'), email_receptor, body_email(email_receptor,mail_emisor))
+        return {"msg":"El familiar se ha registrado con éxito"}
     except Exception as e:
-        return {"msg":"ups algo salio mal"}
+        return {"msg":"Ups algo salio mal"}
 
-def body_email(email_receptor):
+def body_email(email_receptor, mail_emisor):
     
-    asunto = 'conoce la probabilidad de padecer diabetes'
-    body = """
+    asunto = 'Conoce la probabilidad de padecer diabetes'
+    body = f"""
     <div class="banner" >
         <div class="contenido" >
             
             <h1>Diagnosticate</h1>
+            <p>A {mail_emisor} le preocupa tu salud, Conoce la probabilidad de padecer diabetes.</p>
             <p>"Conocer la diabetes es el primer paso hacia la prevención, el diagnóstico y el tratamiento"</p>
             <div>
                 <p> https://diagnosis-diabetes.netlify.app/inicio</p>
