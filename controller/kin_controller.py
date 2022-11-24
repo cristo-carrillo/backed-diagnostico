@@ -45,9 +45,13 @@ def search_familiar_con(email):
 
 def calculate_original(cant_kin):
     relacion_nombre = {}
-    for i in cant_kin:
-        relacion_nombre[i['user_second']] = [i['name_second'],i['parentesco']]
-    return Kin.query_as_diagnosis(relacion_nombre)
+    try:
+        relacion_nombre[cant_kin[0]['user_main']] = [cant_kin[0]['name_main'],'']
+        for i in cant_kin:
+            relacion_nombre[i['user_second']] = [i['name_second'],i['parentesco']]
+        return Kin.query_as_diagnosis(relacion_nombre)
+    except Exception as e:
+        return None
 
 def search_family_sta(email):
     query_family = Kin.search_familiar_mod(email)

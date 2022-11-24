@@ -51,7 +51,8 @@ class Kin:
             busqueda = conexion_mongo.bd_conexion[0].kin.find({
                 'user_main': email,
             },
-                {
+                {'user_main':1,
+                'name_main':1,
                 'user_second': 1,
                 'name_second': 1,
                 'parentesco': 1,
