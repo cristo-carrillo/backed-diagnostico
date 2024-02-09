@@ -61,12 +61,6 @@ def solicitar_sintomas():
     return sintomas_paciente
 
 
-def validar_datos(data):
-    if data == 100.00:
-        return 85.00
-    return data
-
-
 def data_prueba():
     return {'edad': [58],
             'sexo': [1],
@@ -88,14 +82,11 @@ def data_prueba():
             'dificultad_mirar': [3]}
 
 
-# sintomas_paciente = data_prueba()
-
-# sintomas_paciente = data_prueba()
 def diagnosticate(sintomas_paciente):
     try:
         prediccion = knn.predict_proba(pd.DataFrame(sintomas_paciente))
         return {
-            "probability":validar_datos(round(prediccion[0][1]*100,2)),
+            "probability":round(prediccion[0][1]*100,2),
             "status":200
             }
     except Exception:
